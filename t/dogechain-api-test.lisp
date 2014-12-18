@@ -18,13 +18,6 @@
       (is (string= "http://dogechain.info/chain/Dogecoin/q/testmethod/param-1/param-2"
                    (dogechain-api::build-simple-endpoint "testmethod" '("param-1" "param-2")))))
 
-
 (test create-simple-endpoint-does-not-add-empty-params
       (is (string= "http://dogechain.info/chain/Dogecoin/q/testmethod/"
                    (dogechain-api::build-simple-endpoint "testmethod" '(nil nil nil)))))
-
-;; [todo] - Can this be removed?
-(defun run-tests ()
-  (run! 'dogechain-api))
-
-

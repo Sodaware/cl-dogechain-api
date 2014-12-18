@@ -1,2 +1,2 @@
 (ql:quickload "dogechain-api-test")
-(dogechain-api-test:run-tests)
+(fiveam:run! 'dogechain-api-test::dogechain-api)
