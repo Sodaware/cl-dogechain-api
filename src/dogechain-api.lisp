@@ -28,7 +28,7 @@
   "Create the address endpoint for a simple call to METHOD with optional PARAMS."
   (let ((query-string ""))
     (when (not (null params))
-      (setq query-string (mapconcat 'identity (remove nil params) "/")))
+      (setq query-string (format nil "~{~a~^/~}" (remove nil params) "/")))
     (format nil "~a~a~a/~a"
             +endpoint+
             +simple-endpoint+
