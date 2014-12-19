@@ -24,6 +24,11 @@
 ;; -- Simple API Functions
 ;; ----------------------------------------------------------------------
 
+(defun get-simple (method &rest params)
+  "Get a plaintext result from the chain's METHOD with optional PARAMS."
+  (let ((drakma:*header-stream* nil))
+    (drakma:http-request (build-simple-endpoint method params))))
+
 (defun build-simple-endpoint (method &optional params)
   "Create the address endpoint for a simple call to METHOD with optional PARAMS."
   (let ((query-string ""))
