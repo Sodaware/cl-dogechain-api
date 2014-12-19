@@ -17,7 +17,7 @@
 
 (defun get-address-balance (address)
   "Get amount ever received minus amount ever sent by ADDRESS."
-  nil)
+  (read-from-string (get-simple "addressbalance" address)))
 
 
 ;; ----------------------------------------------------------------------
