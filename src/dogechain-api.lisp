@@ -29,6 +29,10 @@
   "Get the public key hash for ADDRESS."
   (get-simple "addresstohash" address))
 
+(defun valid-address? (address)
+  "Check ADDRESS for validity."
+  (string= "1E" (get-simple "checkaddress" address)))
+
 
 ;; ----------------------------------------------------------------------
 ;; -- Error Handling

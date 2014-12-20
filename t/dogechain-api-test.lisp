@@ -24,6 +24,20 @@
                              "SOME_HASH"))
        (dogechain-api:address-to-hash "TEST_ADDRESS")))
 
+(test valid-address?/returns-true-for-valid-address
+      (cl-mock:dflet
+       ((drakma:http-request (uri)
+                             (is (string= uri "http://dogechain.info/chain/Dogecoin/q/checkaddress/VALID_ADDRESS"))
+                             "1E"))
+       (dogechain-api:valid-address? "VALID_ADDRESS")))
+
+(test valid-address?/returns-false-for-invalid-address
+      (cl-mock:dflet
+       ((drakma:http-request (uri)
+                             (is (string= uri "http://dogechain.info/chain/Dogecoin/q/checkaddress/INVALID_ADDRESS"))
+                             "SZ"))
+       (dogechain-api:valid-address? "INVALID_ADDRESS")))
+
 
 ;; ----------------------------------------------------------------------
 ;; -- Internal Helper Tests
@@ -45,7 +59,7 @@
 
 (test can-get-simple-response
       (cl-mock:dflet
-       ((drakma::http-request (uri)
-                              (is (string= uri "http://dogechain.info/chain/Dogecoin/q/testmethod/"))
-                              "test"))
+       ((drakma:http-request (uri)
+                             (is (string= uri "http://dogechain.info/chain/Dogecoin/q/testmethod/"))
+                             "test"))
        (is (string= "test" (dogechain-api::get-simple "testmethod")))))
