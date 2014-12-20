@@ -8,6 +8,14 @@
 ;; -- Simple Method Tests
 ;; ----------------------------------------------------------------------
 
+(test get-address-balance/signals-an-error-when-api-returns-error
+      (cl-mock:dflet
+       ((drakma:http-request (uri)
+                             (is (string= uri "http://dogechain.info/chain/Dogecoin/q/addressbalance/invalid_address"))
+                             "Error: invalid address"))
+       (signals
+        (error "Did not signal error")
+        (dogechain-api:get-address-balance "invalid_address"))))
 
 
 ;; ----------------------------------------------------------------------

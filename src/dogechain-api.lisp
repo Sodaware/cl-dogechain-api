@@ -20,7 +20,33 @@
 
 (defun get-address-balance (address)
   "Get amount ever received minus amount ever sent by ADDRESS."
-  (read-from-string (get-simple "addressbalance" address)))
+  (let ((response (get-simple "addressbalance" address)))
+    (if (string= response "ERROR: address invalid")
+        (api-error "Address invalid")
+        (read-from-string response))))
+
+
+;; ----------------------------------------------------------------------
+;; -- Error Handling
+;; ----------------------------------------------------------------------
+
+(define-condition api-error (error)
+  ((message
+    :initarg :message
+    :accessor api-error-message
+    :initform nil
+    :documentation "Message from the server indicating the error.")
+   (url
+    :initarg :url
+    :accessor api-error-url
+    :initform nil
+    :documentation "The API URL that was queried.")))
+
+(defun api-error (message &key url)
+  "Throw an api error with MESSAGE and optional URL."
+  (error 'api-error
+         :message message
+         :url (if (null url) *last-called-url* url)))
 
 
 ;; ----------------------------------------------------------------------
