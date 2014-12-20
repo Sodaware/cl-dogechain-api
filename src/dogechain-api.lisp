@@ -25,6 +25,10 @@
         (api-error "Address invalid")
         (read-from-string response))))
 
+(defun address-to-hash (address)
+  "Get the public key hash for ADDRESS."
+  (get-simple "addresstohash" address))
+
 
 ;; ----------------------------------------------------------------------
 ;; -- Error Handling

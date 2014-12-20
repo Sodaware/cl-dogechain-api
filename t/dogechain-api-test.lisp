@@ -17,6 +17,13 @@
         (error "Did not signal error")
         (dogechain-api:get-address-balance "invalid_address"))))
 
+(test get-address-hash/can-get-address-hash
+      (cl-mock:dflet
+       ((drakma:http-request (uri)
+                             (is (string= uri "http://dogechain.info/chain/Dogecoin/q/addresstohash/TEST_ADDRESS"))
+                             "SOME_HASH"))
+       (dogechain-api:address-to-hash "TEST_ADDRESS")))
+
 
 ;; ----------------------------------------------------------------------
 ;; -- Internal Helper Tests
