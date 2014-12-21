@@ -33,6 +33,14 @@
   "Check ADDRESS for validity."
   (string= "1E" (get-simple "checkaddress" address)))
 
+(defun decode-address (address)
+  "Get the version prefix and hash encoded in ADDRESS."
+  (let* ((result (get-simple "decode_address" address))
+         (parts (cl-ppcre:split ":" result)))
+    (print parts)
+    `((:version . ,(car parts))
+      (:hash . ,(car (cdr parts))))))
+
 
 ;; ----------------------------------------------------------------------
 ;; -- Error Handling
