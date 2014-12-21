@@ -2,4 +2,5 @@
   (:use #:cl #:drakma :cl-json)
   (:export #:get-address-balance
            #:address-to-hash
-           #:valid-address?))
+           #:valid-address?
+           #:decode-address))
