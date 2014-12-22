@@ -4,4 +4,5 @@
            #:address-to-hash
            #:valid-address?
            #:decode-address
-           #:get-block-count))
+           #:get-block-count
+           #:get-difficulty))

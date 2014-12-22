@@ -44,6 +44,11 @@
   "Get the current block number."
   (read-from-string (get-simple "getblockcount")))
 
+(defun get-difficulty ()
+  "Get the difficulty of the last solved block."
+  (read-from-string (get-simple "getdifficulty")))
+
+
 ;; ----------------------------------------------------------------------
 ;; -- Error Handling
 ;; ----------------------------------------------------------------------
