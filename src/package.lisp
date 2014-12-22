@@ -3,4 +3,5 @@
   (:export #:get-address-balance
            #:address-to-hash
            #:valid-address?
-           #:decode-address))
+           #:decode-address
+           #:get-block-count))

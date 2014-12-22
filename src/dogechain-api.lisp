@@ -40,6 +40,9 @@
     `((:version . ,(car parts))
       (:hash . ,(car (cdr parts))))))
 
+(defun get-block-count ()
+  "Get the current block number."
+  (read-from-string (get-simple "getblockcount")))
 
 ;; ----------------------------------------------------------------------
 ;; -- Error Handling
