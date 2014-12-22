@@ -5,4 +5,5 @@
            #:valid-address?
            #:decode-address
            #:get-block-count
-           #:get-difficulty))
+           #:get-difficulty
+           #:get-received-by-address))

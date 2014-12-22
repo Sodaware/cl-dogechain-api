@@ -48,6 +48,12 @@
   "Get the difficulty of the last solved block."
   (read-from-string (get-simple "getdifficulty")))
 
+(defun get-received-by-address (address)
+  (let ((response (get-simple "getreceivedbyaddress" address)))
+    (if (string= response "ERROR: address invalid")
+        (api-error "Address invalid")
+        (read-from-string response))))
+
 
 ;; ----------------------------------------------------------------------
 ;; -- Error Handling
