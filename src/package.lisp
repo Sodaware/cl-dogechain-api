@@ -7,4 +7,5 @@
            #:get-block-count
            #:get-difficulty
            #:get-received-by-address
-           #:get-sent-by-address))
+           #:get-sent-by-address
+           #:hash-to-address))

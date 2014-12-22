@@ -60,6 +60,10 @@
         (api-error "Address invalid")
         (read-from-string response))))
 
+(defun hash-to-address (hash)
+  "Convert HASH to a Dogecoin address."
+  (get-simple "hashtoaddress" hash))
+
 
 ;; ----------------------------------------------------------------------
 ;; -- Error Handling
