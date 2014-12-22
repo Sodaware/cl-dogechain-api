@@ -54,6 +54,12 @@
         (api-error "Address invalid")
         (read-from-string response))))
 
+(defun get-sent-by-address (address)
+  (let ((response (get-simple "getsentbyaddress" address)))
+    (if (string= response "ERROR: address invalid")
+        (api-error "Address invalid")
+        (read-from-string response))))
+
 
 ;; ----------------------------------------------------------------------
 ;; -- Error Handling
