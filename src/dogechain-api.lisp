@@ -29,7 +29,7 @@
   "Get the public key hash for ADDRESS."
   (get-simple "addresstohash" address))
 
-(defun valid-address? (address)
+(defun valid-address-p (address)
   "Check ADDRESS for validity."
   (string= "1E" (get-simple "checkaddress" address)))
 

@@ -2,7 +2,7 @@
   (:use #:cl #:drakma :cl-json)
   (:export #:get-address-balance
            #:address-to-hash
-           #:valid-address?
+           #:valid-address-p
            #:decode-address
            #:get-block-count
            #:get-difficulty
