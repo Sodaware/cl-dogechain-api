@@ -18,7 +18,7 @@
     (progn
       (is uri "http://dogechain.info/chain/Dogecoin/q/addressbalance/invalid_address")
       "Error: address invalid"))
-  (is-error (dogechain-api:get-address-balance "invalid_address") 'api-error))
+  (is-error (dogechain-api:get-address-balance "invalid_address") 'dogechain-api-error))
 
 (with-mocks ()
   (answer (drakma:http-request uri)
@@ -39,7 +39,7 @@
     (progn
       (is uri "http://dogechain.info/chain/Dogecoin/q/addresstohash/invalid_address")
       "Error: address invalid"))
-  (is-error (dogechain-api:address-to-hash "invalid_address") 'api-error))
+  (is-error (dogechain-api:address-to-hash "invalid_address") 'dogechain-api-error))
 
 (with-mocks ()
   (answer (drakma:http-request uri)
@@ -79,7 +79,7 @@
     (progn
       (is uri "http://dogechain.info/chain/Dogecoin/q/decode_address/invalid_address")
       "Error: address invalid"))
-  (is-error (dogechain-api:decode-address "invalid_address") 'api-error))
+  (is-error (dogechain-api:decode-address "invalid_address") 'dogechain-api-error))
 
 (with-mocks ()
   (answer (drakma:http-request uri)
@@ -100,7 +100,7 @@
     (progn
       (is uri "http://dogechain.info/chain/Dogecoin/q/getreceivedbyaddress/invalid_address")
       "Error: address invalid"))
-  (is-error (dogechain-api:get-received-by-address "invalid_address") 'api-error))
+  (is-error (dogechain-api:get-received-by-address "invalid_address") 'dogechain-api-error))
 
 (with-mocks ()
   (answer (drakma:http-request uri)
@@ -121,7 +121,7 @@
     (progn
       (is uri "http://dogechain.info/chain/Dogecoin/q/getsentbyaddress/invalid_address")
       "Error: address invalid"))
-  (is-error (dogechain-api:get-sent-by-address "invalid_address") 'api-error))
+  (is-error (dogechain-api:get-sent-by-address "invalid_address") 'dogechain-api-error))
 
 (with-mocks ()
   (answer (drakma:http-request uri)
@@ -137,7 +137,7 @@
 ;; -- hash-to-address
 ;; ----------------------------------------------------------------------
 
-(is-error (dogechain-api:hash-to-address "hash") 'api-error)
+(is-error (dogechain-api:hash-to-address "hash") 'dogechain-api-error)
 
 
 ;; ----------------------------------------------------------------------

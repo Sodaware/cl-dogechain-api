@@ -22,14 +22,14 @@
   "Get amount ever received minus amount ever sent by ADDRESS."
   (let ((response (get-simple "addressbalance" address)))
     (if (string= response "Error: address invalid")
-        (api-error "Address invalid")
+        (dogechain-api-error "Address invalid")
         (read-from-string response))))
 
 (defun address-to-hash (address)
   "Get the public key hash for ADDRESS."
   (let ((response (get-simple "addresstohash" address)))
     (if (string= response "Error: address invalid")
-        (api-error "Address invalid")
+        (dogechain-api-error "Address invalid")
         response)))
 
 (defun valid-address-p (address)
@@ -41,7 +41,7 @@
   (let* ((response (get-simple "decode_address" address))
          (parts (cl-ppcre:split ":" response)))
     (if (string= response "Error: address invalid")
-        (api-error "Address invalid")
+        (dogechain-api-error "Address invalid")
         `((:version . ,(car parts))
           (:hash . ,(cadr parts))))))
 
@@ -65,40 +65,40 @@
   "Get the total amount of Dogecoin ever received by ADDRESS."
   (let ((response (get-simple "getreceivedbyaddress" address)))
     (if (string= response "Error: address invalid")
-        (api-error "Address invalid")
+        (dogechain-api-error "Address invalid")
         (read-from-string response))))
 
 (defun get-sent-by-address (address)
   "Get the total amount of Dogecoin ever sent by ADDRESS."
   (let ((response (get-simple "getsentbyaddress" address)))
     (if (string= response "Error: address invalid")
-        (api-error "Address invalid")
+        (dogechain-api-error "Address invalid")
         (read-from-string response))))
 
 (defun hash-to-address (hash)
   "REMOVED FROM REMOTE API"
-  (api-error "hash-to-address has been removed"))
+  (dogechain-api-error "hash-to-address has been removed"))
 
 
 ;; ----------------------------------------------------------------------
 ;; -- Error Handling
 ;; ----------------------------------------------------------------------
 
-(define-condition api-error (error)
+(define-condition dogechain-api-error (error)
   ((message
     :initarg :message
-    :accessor api-error-message
+    :accessor dogechain-api-error-message
     :initform nil
     :documentation "Message from the server indicating the error.")
    (url
     :initarg :url
-    :accessor api-error-url
+    :accessor dogechain-api-error-url
     :initform nil
     :documentation "The API URL that was queried.")))
 
-(defun api-error (message &key url)
+(defun dogechain-api-error (message &key url)
   "Throw an api error with MESSAGE and optional URL."
-  (error 'api-error
+  (error 'dogechain-api-error
          :message message
          :url (if (null url) *last-called-url* url)))
 
