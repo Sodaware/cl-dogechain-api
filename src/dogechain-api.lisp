@@ -27,7 +27,10 @@
 
 (defun address-to-hash (address)
   "Get the public key hash for ADDRESS."
-  (get-simple "addresstohash" address))
+  (let ((response (get-simple "addresstohash" address)))
+    (if (string= response "Error: address invalid")
+        (api-error "Address invalid")
+        response)))
 
 (defun valid-address-p (address)
   "Check ADDRESS for validity."

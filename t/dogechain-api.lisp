@@ -6,11 +6,11 @@
         :cl-mock))
 (in-package :dogechain-api-test)
 
-(plan 11)
+(plan 15)
 
 
 ;; ----------------------------------------------------------------------
-;; -- Get Address Balance
+;; -- get-address-balance
 ;; ----------------------------------------------------------------------
 
 (with-mocks ()
@@ -28,6 +28,25 @@
   (let ((balance (dogechain-api:get-address-balance "valid_address")))
     (is balance 1.2345)
     (is-type balance 'float)))
+
+
+;; ----------------------------------------------------------------------
+;; -- address-to-hash
+;; ----------------------------------------------------------------------
+
+(with-mocks ()
+  (answer (drakma:http-request uri)
+    (progn
+      (is uri "http://dogechain.info/chain/Dogecoin/q/addresstohash/invalid_address")
+      "Error: address invalid"))
+  (is-error (dogechain-api:address-to-hash "invalid_address") 'api-error))
+
+(with-mocks ()
+  (answer (drakma:http-request uri)
+    (progn
+      (is uri "http://dogechain.info/chain/Dogecoin/q/addresstohash/valid_address")
+      "hashgoeshere"))
+  (is (dogechain-api:address-to-hash "valid_address") "hashgoeshere"))
 
 
 ;; ----------------------------------------------------------------------
