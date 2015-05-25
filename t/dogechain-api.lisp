@@ -6,7 +6,7 @@
         :cl-mock))
 (in-package :dogechain-api-test)
 
-(plan 20)
+(plan 26)
 
 
 ;; ----------------------------------------------------------------------
@@ -89,6 +89,13 @@
   (let ((response (dogechain-api:decode-address "valid_address")))
     (is (cdr (assoc :version response)) "1E")
     (is (cdr (assoc :hash response)) "hash_goes_here")))
+
+
+;; ----------------------------------------------------------------------
+;; -- hash-to-address
+;; ----------------------------------------------------------------------
+
+(is-error (dogechain-api:hash-to-address "hash") 'api-error)
 
 
 ;; ----------------------------------------------------------------------

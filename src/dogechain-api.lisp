@@ -66,8 +66,8 @@
         (read-from-string response))))
 
 (defun hash-to-address (hash)
-  "Convert HASH to a Dogecoin address."
-  (get-simple "hashtoaddress" hash))
+  "REMOVED FROM REMOTE API"
+  (api-error "hash-to-address has been removed"))
 
 
 ;; ----------------------------------------------------------------------
