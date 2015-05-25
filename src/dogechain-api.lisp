@@ -21,7 +21,7 @@
 (defun get-address-balance (address)
   "Get amount ever received minus amount ever sent by ADDRESS."
   (let ((response (get-simple "addressbalance" address)))
-    (if (string= response "ERROR: address invalid")
+    (if (string= response "Error: address invalid")
         (api-error "Address invalid")
         (read-from-string response))))
 
