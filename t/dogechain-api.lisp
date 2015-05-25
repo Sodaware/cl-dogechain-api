@@ -6,7 +6,7 @@
         :cl-mock))
 (in-package :dogechain-api-test)
 
-(plan 31)
+(plan 36)
 
 
 ;; ----------------------------------------------------------------------
@@ -110,6 +110,27 @@
   (let ((received-amount (dogechain-api:get-received-by-address "valid_address")))
     (is received-amount 1.2345)
     (is-type received-amount 'float)))
+
+
+;; ----------------------------------------------------------------------
+;; -- get-sent-by-address
+;; ----------------------------------------------------------------------
+
+(with-mocks ()
+  (answer (drakma:http-request uri)
+    (progn
+      (is uri "http://dogechain.info/chain/Dogecoin/q/getsentbyaddress/invalid_address")
+      "Error: address invalid"))
+  (is-error (dogechain-api:get-sent-by-address "invalid_address") 'api-error))
+
+(with-mocks ()
+  (answer (drakma:http-request uri)
+    (progn
+      (is uri "http://dogechain.info/chain/Dogecoin/q/getsentbyaddress/valid_address")
+      "1.2345"))
+  (let ((sent-amount (dogechain-api:get-sent-by-address "valid_address")))
+    (is sent-amount 1.2345)
+    (is-type sent-amount 'float)))
 
 
 ;; ----------------------------------------------------------------------
