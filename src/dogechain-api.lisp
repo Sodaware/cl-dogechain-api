@@ -55,7 +55,7 @@
 
 (defun get-received-by-address (address)
   (let ((response (get-simple "getreceivedbyaddress" address)))
-    (if (string= response "ERROR: address invalid")
+    (if (string= response "Error: address invalid")
         (api-error "Address invalid")
         (read-from-string response))))
 
