@@ -71,6 +71,27 @@
 
 
 ;; ----------------------------------------------------------------------
+;; -- decode-address
+;; ----------------------------------------------------------------------
+
+(with-mocks ()
+  (answer (drakma:http-request uri)
+    (progn
+      (is uri "http://dogechain.info/chain/Dogecoin/q/decode_address/invalid_address")
+      "Error: address invalid"))
+  (is-error (dogechain-api:decode-address "invalid_address") 'api-error))
+
+(with-mocks ()
+  (answer (drakma:http-request uri)
+    (progn
+      (is uri "http://dogechain.info/chain/Dogecoin/q/decode_address/valid_address")
+      "1E:hash_goes_here"))
+  (let ((response (dogechain-api:decode-address "valid_address")))
+    (is (cdr (assoc :version response)) "1E")
+    (is (cdr (assoc :hash response)) "hash_goes_here")))
+
+
+;; ----------------------------------------------------------------------
 ;; -- Internal Helper Tests
 ;; ----------------------------------------------------------------------
 

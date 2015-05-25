@@ -38,10 +38,12 @@
 
 (defun decode-address (address)
   "Get the version prefix and hash encoded in ADDRESS."
-  (let* ((result (get-simple "decode_address" address))
-         (parts (cl-ppcre:split ":" result)))
-    `((:version . ,(car parts))
-      (:hash . ,(car (cdr parts))))))
+  (let* ((response (get-simple "decode_address" address))
+         (parts (cl-ppcre:split ":" response)))
+    (if (string= response "Error: address invalid")
+        (api-error "Address invalid")
+        `((:version . ,(car parts))
+          (:hash . ,(cadr parts))))))
 
 (defun get-block-count ()
   "Get the current block number."
