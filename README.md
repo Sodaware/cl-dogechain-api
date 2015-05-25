@@ -5,13 +5,117 @@
 **dogechain-api** is Common Lisp library for working with the dogechain.info
 API.
 
-The DogeChain API is split into two sections, a simple query API and a JSON api.
+### Simple Query API
 
-This is a work in progress library...
+The DogeChain simple query API docs can be found here:
+http://dogechain.info/api/simple
+
+The API functions are mapped as follows:
+
+API Method           | Local Function
+---------------------|--------------------------------------
+addressbalance       | dogechain-api:get-address-balance
+addresstohash        | dogechain-api:address-to-hash
+checkaddress         | dogechain-api:valid-address-p
+decode_address       | dogechain-api:decode-address
+getblockcount        | dogechain-api:get-block-count
+getdifficulty        | dogechain-api:get-difficulty
+getreceivedbyaddress | dogechain-api:get-address-received
+getsentbyaddress     | dogechain-api:get-address-sent
+
+
+#### dogechain-api:get-address-balance *address*
+
+Get the total amount ever received, minus the total amount ever sent for
+*address*.
+
+Will raise a `dogechain-api-error` if the address is invalid.
+
+```lisp
+(dogechain-api:get-address-balance "DTnt7VZqR5ofHhAxZuDy4m3PhSjKFXpw3e")
+=> 12345.6789
+```
+
+#### dogechain-api:address-to-hash *address*
+
+Get the public key hash for *address*.
+
+Will raise a `dogechain-api-error` if the address is invalid.
+
+```lisp
+(dogechain-api:address-to-hash "DTnt7VZqR5ofHhAxZuDy4m3PhSjKFXpw3e")
+=> "F8783344AF8532A73DFA97EBDDFCC7527A2C6E5A"
+```
+
+#### dogechain-api:valid-address-p *address*
+
+Check *address* for validity.
+
+```lisp
+(dogechain-api:valid-address-p "DTnt7VZqR5ofHhAxZuDy4m3PhSjKFXpw3e")
+=> T
+
+(dogechain-api:valid-address-p "INVALID")
+=> NIL
+```
+
+#### dogechain-api:decode-address *address*
+
+Get the version prefix and hash encoded in *address*. Returns an association
+list containing `:version` and `:hash` keys.
+
+Will raise a `dogechain-api-error` if the address is invalid.
+
+```lisp
+(dogechain-api:decode-address "DTnt7VZqR5ofHhAxZuDy4m3PhSjKFXpw3e")
+=> ((:version . "1E")
+    (:hash . "F8783344AF8532A73DFA97EBDDFCC7527A2C6E5A"))
+```
+
+#### dogechain-api:get-block-count
+
+Get the current block number.
+
+```lisp
+(dogechain-api:get-block-count)
+=> 123456
+```
+
+#### dogechain-api:get-difficulty
+
+Get the difficulty of the last solved block.
+
+```lisp
+(dogechain-api:get-difficulty)
+=> 123456
+```
+
+#### dogechain-api:get-address-received *address*
+
+Get the total amount ever received by *address*.
+
+Will raise a `dogechain-api-error` if the address is invalid.
+
+```lisp
+(dogechain-api:get-received-by-address "DTnt7VZqR5ofHhAxZuDy4m3PhSjKFXpw3e")
+=> 123456.7890
+```
+
+#### dogechain-api:get-address-sent *address*
+
+Get the total amount ever sent by *address*.
+
+Will raise a `dogechain-api-error` if the address is invalid.
+
+```lisp
+(dogechain-api:get-sent-by-address "DTnt7VZqR5ofHhAxZuDy4m3PhSjKFXpw3e")
+=> 123456.7890
+```
+
 
 ## Licence
 
-Copyright (C) 2014 Phil Newton
+Copyright (C) 2015 Phil Newton
 
 This program is free software; you can redistribute it and/or modify it under
 the terms of the GNU General Public License as published by the Free Software
