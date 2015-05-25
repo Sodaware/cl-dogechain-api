@@ -1,9 +1,31 @@
 # dogechain-api
 
+
 ## Description
 
 **dogechain-api** is Common Lisp library for working with the dogechain.info
 API.
+
+
+## Installation (with Quicklisp)
+
+Clone the repository into your `~/quicklisp/local-projects/` directory:
+
+```bash
+cd ~/quicklisp/local-projects/
+git clone https://github.com/Sodaware/cl-dogechain-api.git
+```
+
+Include the code in whatever you're doing:
+
+```lisp
+(ql:quickload :dogechain-api)
+```
+
+Now you're all ready to have fun!
+
+
+## Function Documentation
 
 ### Simple Query API
 
