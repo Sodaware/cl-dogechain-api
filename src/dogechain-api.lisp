@@ -53,13 +53,23 @@
   "Get the difficulty of the last solved block."
   (read-from-string (get-simple "getdifficulty")))
 
+(defun get-address-received (address)
+  "Get the total amount of Dogecoin ever received by ADDRESS."
+  (get-received-by-address address))
+
+(defun get-address-sent (address)
+  "Get the total amount of Dogecoin ever sent by ADDRESS."
+  (get-sent-by-address address))
+
 (defun get-received-by-address (address)
+  "Get the total amount of Dogecoin ever received by ADDRESS."
   (let ((response (get-simple "getreceivedbyaddress" address)))
     (if (string= response "Error: address invalid")
         (api-error "Address invalid")
         (read-from-string response))))
 
 (defun get-sent-by-address (address)
+  "Get the total amount of Dogecoin ever sent by ADDRESS."
   (let ((response (get-simple "getsentbyaddress" address)))
     (if (string= response "Error: address invalid")
         (api-error "Address invalid")
