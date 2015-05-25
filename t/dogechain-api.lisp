@@ -6,7 +6,7 @@
         :cl-mock))
 (in-package :dogechain-api-test)
 
-(plan 15)
+(plan 20)
 
 
 ;; ----------------------------------------------------------------------
@@ -47,6 +47,27 @@
       (is uri "http://dogechain.info/chain/Dogecoin/q/addresstohash/valid_address")
       "hashgoeshere"))
   (is (dogechain-api:address-to-hash "valid_address") "hashgoeshere"))
+
+
+;; ----------------------------------------------------------------------
+;; -- valid-address-p
+;; ----------------------------------------------------------------------
+
+(with-mocks ()
+  (answer (drakma:http-request uri)
+    (progn
+      (is uri "http://dogechain.info/chain/Dogecoin/q/checkaddress/invalid_address")
+      "Error: address invalid"))
+  (isnt (dogechain-api:valid-address-p "invalid_address") T))
+
+(with-mocks ()
+  (answer (drakma:http-request uri)
+    (progn
+      (is uri "http://dogechain.info/chain/Dogecoin/q/checkaddress/valid_address")
+      "1E"))
+  (let ((response (dogechain-api:valid-address-p "valid_address")))
+    (ok response)
+    (is-type response 'boolean)))
 
 
 ;; ----------------------------------------------------------------------
