@@ -6,7 +6,7 @@
         :cl-mock))
 (in-package :dogechain-api-test)
 
-(plan 36)
+(plan 38)
 
 
 ;; ----------------------------------------------------------------------
@@ -160,7 +160,16 @@
   (answer (drakma:http-request uri)
     (progn
       (is uri "http://dogechain.info/chain/Dogecoin/q/testmethod/")
-      "test"))
+      "test<!-- comments for security -->"))
   (is (dogechain-api::get-simple "testmethod") "test"))
+
+
+;; Check HTML comments get stripped
+
+(is (dogechain-api::strip-html-comments "12345<!-- comment -->")
+    "12345")
+
+(is (dogechain-api::strip-html-comments "12345")
+    "12345")
 
 (finalize)

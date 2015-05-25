@@ -112,7 +112,7 @@
   (let ((drakma:*header-stream* nil)
         (url (build-simple-endpoint method params)))
     (setf *last-called-url* url)
-    (drakma:http-request url)))
+    (strip-html-comments (drakma:http-request url))))
 
 (defun build-simple-endpoint (method &optional params)
   "Create the address endpoint for a simple call to METHOD with optional PARAMS."
@@ -124,3 +124,9 @@
             +simple-endpoint+
             method
             query-string)))
+
+(defun strip-html-comments (content)
+  "Remove any HTML comments from CONTENT.
+The simple API now adds HTML comments to the end of the response, so they need
+to be manually removed."
+  (subseq content 0 (position #\< content)))
