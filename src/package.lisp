@@ -8,4 +8,5 @@
            #:get-difficulty
            #:get-received-by-address
            #:get-sent-by-address
-           #:hash-to-address))
+           #:hash-to-address
+           #:api-error))
