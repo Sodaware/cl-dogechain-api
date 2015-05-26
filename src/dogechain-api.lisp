@@ -61,6 +61,10 @@
   "Get the total amount of Dogecoin ever sent by ADDRESS."
   (get-sent-by-address address))
 
+(defun get-total-mined ()
+  "Get the total amount of currency ever mined."
+  (read-from-string (get-simple "totalbc")))
+
 (defun get-received-by-address (address)
   "Get the total amount of Dogecoin ever received by ADDRESS."
   (let ((response (get-simple "getreceivedbyaddress" address)))

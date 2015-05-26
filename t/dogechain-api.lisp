@@ -6,7 +6,7 @@
         :cl-mock))
 (in-package :dogechain-api-test)
 
-(plan 38)
+(plan 41)
 
 
 ;; ----------------------------------------------------------------------
@@ -131,6 +131,20 @@
   (let ((sent-amount (dogechain-api:get-sent-by-address "valid_address")))
     (is sent-amount 1.2345)
     (is-type sent-amount 'float)))
+
+
+;; ----------------------------------------------------------------------
+;; -- hash-to-address
+;; ----------------------------------------------------------------------
+
+(with-mocks ()
+  (answer (drakma:http-request uri)
+    (progn
+      (is uri "http://dogechain.info/chain/Dogecoin/q/totalbc/")
+      "12345.6789"))
+  (let ((mined-amount (dogechain-api:get-total-mined)))
+    (is mined-amount 12345.6789)
+    (is-type mined-amount 'float)))
 
 
 ;; ----------------------------------------------------------------------

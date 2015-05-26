@@ -9,4 +9,5 @@
            #:get-received-by-address
            #:get-sent-by-address
            #:hash-to-address
+           #:get-total-mined
            #:dogechain-api-error))

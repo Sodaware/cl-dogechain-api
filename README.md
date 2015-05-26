@@ -44,6 +44,7 @@ getblockcount        | dogechain-api:get-block-count
 getdifficulty        | dogechain-api:get-difficulty
 getreceivedbyaddress | dogechain-api:get-address-received
 getsentbyaddress     | dogechain-api:get-address-sent
+getbc                | dogechain-api:get-total-mined
 
 
 #### dogechain-api:get-address-balance *address*
@@ -134,6 +135,14 @@ Will raise a `dogechain-api-error` if the address is invalid.
 => 123456.7890
 ```
 
+#### dogechain-api:get-total-mined
+
+Get the total amount of currency ever mined.
+
+```lisp
+(dogechain-api:get-total-mined)
+=> 123456.7890
+```
 
 ## Licence
 
