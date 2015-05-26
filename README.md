@@ -25,6 +25,25 @@ Include the code in whatever you're doing:
 Now you're all ready to have fun!
 
 
+## Testing
+
+Tests live in the `/t/` directory, and can be run using
+[shelly](https://github.com/fukamachi/shelly):
+
+```bash
+shly test
+```
+
+Alternatively, fire up a REPL from the repository directory and run the
+following commands:
+
+```bash
+(load "dogechain-api.asd")
+(load "dogechain-api-test.asd")
+(asdf:test-system :dogechain-api)
+```
+
+
 ## Function Documentation
 
 ### Simple Query API
