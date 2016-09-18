@@ -11,5 +11,6 @@
   :depends-on (:iterate :drakma :cl-json)
   :pathname "src"
   :components ((:file "package")
+               (:file "configuration")
                (:file "dogechain-api"))
   :in-order-to ((test-op (test-op dogechain-api-test))))
