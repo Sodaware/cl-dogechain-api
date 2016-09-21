@@ -131,34 +131,32 @@
 ;; ----------------------------------------------------------------------
 
 (subtest "::build-simple-endpoint"
-
   (is (dogechain-api::build-simple-endpoint "testmethod")
-      "http://dogechain.info/chain/Dogecoin/q/testmethod/")
-
+      "http://dogechain.info/chain/Dogecoin/q/testmethod/"
+      "Builds endpoint without parameters")
   (is (dogechain-api::build-simple-endpoint "testmethod" '("param-1"))
-      "http://dogechain.info/chain/Dogecoin/q/testmethod/param-1")
-
+      "http://dogechain.info/chain/Dogecoin/q/testmethod/param-1"
+      "Appends single parameter to endpoint")
   (is (dogechain-api::build-simple-endpoint "testmethod" '("param-1" "param-2"))
-      "http://dogechain.info/chain/Dogecoin/q/testmethod/param-1/param-2")
-
+      "http://dogechain.info/chain/Dogecoin/q/testmethod/param-1/param-2"
+      "Appends multiple parameters to endpoint")
   (is (dogechain-api::build-simple-endpoint "testmethod" '(nil nil nil))
-      "http://dogechain.info/chain/Dogecoin/q/testmethod/"))
+      "http://dogechain.info/chain/Dogecoin/q/testmethod/"
+      "Does not append nil parameters to endpoint"))
 
 (subtest "::get-simple"
-
-  (with-mocks ()
-    (answer (drakma:http-request uri)
-            (progn
-              (is uri "http://dogechain.info/chain/Dogecoin/q/testmethod/")
-              "test<!-- comments for security -->"))
-    (is (dogechain-api::get-simple "testmethod") "test")))
-
+  (with-mocked-request "http://dogechain.info/chain/Dogecoin/q/testmethod/"
+    "test<!-- comments for security -->"
+    (is (dogechain-api::get-simple "testmethod") "test"
+        "Removes HTML comments from end of responses")))
 
 (subtest "::strip-html-comments"
   (is (dogechain-api::strip-html-comments "12345<!-- comment -->")
-      "12345")
+      "12345"
+      "Removes HTML comments from string when present")
 
   (is (dogechain-api::strip-html-comments "12345")
-      "12345"))
+      "12345"
+      "Does not modify string when no HTML comments present"))
 
 (finalize)
