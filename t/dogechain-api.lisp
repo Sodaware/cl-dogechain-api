@@ -134,6 +134,9 @@
   (is (dogechain-api::build-simple-endpoint "testmethod")
       "http://dogechain.info/chain/Dogecoin/q/testmethod/"
       "Builds endpoint without parameters")
+  (is (dogechain-api::build-simple-endpoint "TeStMeThOd")
+      "http://dogechain.info/chain/Dogecoin/q/testmethod/"
+      "Converts actions to lowercase") 
   (is (dogechain-api::build-simple-endpoint "testmethod" '("param-1"))
       "http://dogechain.info/chain/Dogecoin/q/testmethod/param-1"
       "Appends single parameter to endpoint")

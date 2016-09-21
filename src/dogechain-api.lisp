@@ -112,7 +112,7 @@
   (let ((query-string ""))
     (when (not (null params))
       (setf query-string (format nil "~{~a~^/~}" (remove nil params) "/")))
-    (format nil "~a~a~a/~a"
+    (format nil "~a~a~(~a~)/~a"
             +endpoint+
             +simple-endpoint+
             method
