@@ -29,19 +29,15 @@
 ;; -- address-to-hash
 ;; ----------------------------------------------------------------------
 
-(with-mocks ()
-  (answer (drakma:http-request uri)
-    (progn
-      (is uri "http://dogechain.info/chain/Dogecoin/q/addresstohash/invalid_address")
-      "Error: address invalid"))
-  (is-error (dogechain-api:address-to-hash "invalid_address") 'dogechain-api-error))
-
-(with-mocks ()
-  (answer (drakma:http-request uri)
-    (progn
-      (is uri "http://dogechain.info/chain/Dogecoin/q/addresstohash/valid_address")
-      "hashgoeshere"))
-  (is (dogechain-api:address-to-hash "valid_address") "hashgoeshere"))
+(subtest ":address-to-hash"
+  (with-mocked-request "http://dogechain.info/chain/Dogecoin/q/addresstohash/invalid_address"
+    "Error: address invalid"
+    (is-error (dogechain-api:address-to-hash "invalid_address") 'dogechain-api-error
+              "Raises a `dogechain-api-error for invalid addresses."))
+  (with-mocked-request "http://dogechain.info/chain/Dogecoin/q/addresstohash/valid_address"
+    "hashed-result"
+    (is (dogechain-api:address-to-hash "valid_address") "hashed-result"
+        "Returns result as a string.")))
 
 
 ;; ----------------------------------------------------------------------
