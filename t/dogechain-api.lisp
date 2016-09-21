@@ -94,22 +94,15 @@
 ;; ----------------------------------------------------------------------
 
 (subtest ":get-sent-by-address"
-
-  (with-mocks ()
-    (answer (drakma:http-request uri)
-            (progn
-              (is uri "http://dogechain.info/chain/Dogecoin/q/getsentbyaddress/invalid_address")
-              "Error: address invalid"))
-    (is-error (dogechain-api:get-sent-by-address "invalid_address") 'dogechain-api-error))
-
-  (with-mocks ()
-    (answer (drakma:http-request uri)
-            (progn
-              (is uri "http://dogechain.info/chain/Dogecoin/q/getsentbyaddress/valid_address")
-              "1.2345"))
+  (with-mocked-request "http://dogechain.info/chain/Dogecoin/q/getsentbyaddress/invalid_address"
+    "Error: address invalid"
+    (is-error (dogechain-api:get-sent-by-address "invalid_address") 'dogechain-api-error
+              "Raises 'dogechain-api-error for invalid addresses."))
+  (with-mocked-request "http://dogechain.info/chain/Dogecoin/q/getsentbyaddress/valid_address"
+    "1.2345"
     (let ((sent-amount (dogechain-api:get-sent-by-address "valid_address")))
-      (is sent-amount 1.2345)
-      (is-type sent-amount 'float))))
+      (is-type sent-amount 'float "Returns a floating point amount")
+      (is sent-amount 1.2345 "Returns the amount ever sent"))))
 
 
 ;; ----------------------------------------------------------------------
