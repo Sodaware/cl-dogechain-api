@@ -27,12 +27,8 @@ Now you're all ready to have fun!
 
 ## Testing
 
-Tests live in the `/t/` directory, and can be run using
-[shelly](https://github.com/fukamachi/shelly):
-
-```bash
-shly test
-```
+Tests use [prove](https://github.com/fukamachi/prove) and live in the `/t/`
+directory. With SBCL installed they can be executed by running `make test`.
 
 Alternatively, fire up a REPL from the repository directory and run the
 following commands:
