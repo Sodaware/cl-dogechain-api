@@ -110,6 +110,8 @@
 ;; ----------------------------------------------------------------------
 
 (subtest ":hash-to-address"
+  (is-error (dogechain-api:hash-to-address "hash") 'dogechain-api-error
+            "Raises error when called"))
 
   (with-mocks ()
     (answer (drakma:http-request uri)
