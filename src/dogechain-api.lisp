@@ -11,14 +11,14 @@
   "Get amount ever received minus amount ever sent by ADDRESS."
   (let ((response (get-simple "addressbalance" address)))
     (if (string= response "Error: address invalid")
-        (dogechain-api-error "Address invalid")
+        (invalid-address-error address)
         (read-from-string response))))
 
 (defun address-to-hash (address)
   "Get the public key hash for ADDRESS."
   (let ((response (get-simple "addresstohash" address)))
     (if (string= response "Error: address invalid")
-        (dogechain-api-error "Address invalid")
+        (invalid-address-error address)
         response)))
 
 (defun valid-address-p (address)
@@ -30,7 +30,7 @@
   (let* ((response (get-simple "decode_address" address))
          (parts (cl-ppcre:split ":" response)))
     (if (string= response "Error: address invalid")
-        (dogechain-api-error "Address invalid")
+        (invalid-address-error address)
         `((:version . ,(car parts))
           (:hash . ,(cadr parts))))))
 
@@ -58,14 +58,14 @@
   "Get the total amount of Dogecoin ever received by ADDRESS."
   (let ((response (get-simple "getreceivedbyaddress" address)))
     (if (string= response "Error: address invalid")
-        (dogechain-api-error "Address invalid")
+        (invalid-address-error address)
         (read-from-string response))))
 
 (defun get-sent-by-address (address)
   "Get the total amount of Dogecoin ever sent by ADDRESS."
   (let ((response (get-simple "getsentbyaddress" address)))
     (if (string= response "Error: address invalid")
-        (dogechain-api-error "Address invalid")
+        (invalid-address-error address)
         (read-from-string response))))
 
 (defun hash-to-address (hash)

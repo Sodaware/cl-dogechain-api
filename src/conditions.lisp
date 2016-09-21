@@ -26,3 +26,20 @@
          :url (if (null url) *last-called-url* url)))
 
 
+;; ----------------------------------------
+;; -- Address error conditions
+
+(define-condition invalid-address-error (dogechain-api-error)
+  ((address
+    :initarg :address
+    :accessor invalid-address-error-address
+    :initform nil
+    :documentation "The address that was marked as invalid."))
+  (:documentation "Error raised when an address is invalid."))
+
+(defun invalid-address-error (address &key url)
+  "Throw an api error with MESSAGE and optional URL."
+  (error 'invalid-address-error
+         :message "Address is invalid"
+         :address address
+         :url (if (null url) *last-called-url* url)))

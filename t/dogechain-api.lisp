@@ -6,7 +6,7 @@
         :cl-mock))
 (in-package :dogechain-api-test)
 
-(plan 10)
+(plan 11)
 
 
 ;; ----------------------------------------------------------------------
@@ -16,8 +16,8 @@
 (subtest ":get-address-balance"
   (with-mocked-request "http://dogechain.info/chain/Dogecoin/q/addressbalance/invalid_address"
     "Error: address invalid"
-    (is-error (dogechain-api:get-address-balance "invalid_address") 'dogechain-api-error
-              "Raises a 'dogechain-api-error for invalid addresses."))
+    (is-error (dogechain-api:get-address-balance "invalid_address") 'invalid-address-error
+              "Raises a 'invalid-address-error for invalid addresses."))
   (with-mocked-request "http://dogechain.info/chain/Dogecoin/q/addressbalance/valid_address"
     "1.2345"
     (let ((balance (dogechain-api:get-address-balance "valid_address")))
@@ -32,8 +32,8 @@
 (subtest ":address-to-hash"
   (with-mocked-request "http://dogechain.info/chain/Dogecoin/q/addresstohash/invalid_address"
     "Error: address invalid"
-    (is-error (dogechain-api:address-to-hash "invalid_address") 'dogechain-api-error
-              "Raises a `dogechain-api-error for invalid addresses."))
+    (is-error (dogechain-api:address-to-hash "invalid_address") 'invalid-address-error
+              "Raises a `invalid-address-error for invalid addresses."))
   (with-mocked-request "http://dogechain.info/chain/Dogecoin/q/addresstohash/valid_address"
     "hashed-result"
     (is (dogechain-api:address-to-hash "valid_address") "hashed-result"
@@ -64,8 +64,8 @@
 (subtest ":decode-address"
   (with-mocked-request "http://dogechain.info/chain/Dogecoin/q/decode_address/invalid_address"
     "Error: address invalid"
-    (is-error (dogechain-api:decode-address "invalid_address") 'dogechain-api-error
-              "Raises 'dogechain-api-error for invalid addresses.")) 
+    (is-error (dogechain-api:decode-address "invalid_address") 'invalid-address-error
+              "Raises 'invalid-address-error for invalid addresses.")) 
   (with-mocked-request "http://dogechain.info/chain/Dogecoin/q/decode_address/valid_address"
     "1E:hash_goes_here"
     (let ((response (dogechain-api:decode-address "valid_address")))
@@ -80,8 +80,8 @@
 (subtest ":get-received-by-address"
   (with-mocked-request "http://dogechain.info/chain/Dogecoin/q/getreceivedbyaddress/invalid_address"
     "Error: address invalid"
-    (is-error (dogechain-api:get-received-by-address "invalid_address") 'dogechain-api-error
-              "Raises 'dogechain-api-error for invalid addresses."))
+    (is-error (dogechain-api:get-received-by-address "invalid_address") 'invalid-address-error
+              "Raises 'invalid-address-error for invalid addresses."))
   (with-mocked-request "http://dogechain.info/chain/Dogecoin/q/getreceivedbyaddress/valid_address"
     "1.2345"
     (let ((received-amount (dogechain-api:get-received-by-address "valid_address")))
@@ -96,8 +96,8 @@
 (subtest ":get-sent-by-address"
   (with-mocked-request "http://dogechain.info/chain/Dogecoin/q/getsentbyaddress/invalid_address"
     "Error: address invalid"
-    (is-error (dogechain-api:get-sent-by-address "invalid_address") 'dogechain-api-error
-              "Raises 'dogechain-api-error for invalid addresses."))
+    (is-error (dogechain-api:get-sent-by-address "invalid_address") 'invalid-address-error
+              "Raises 'invalid-address-error for invalid addresses."))
   (with-mocked-request "http://dogechain.info/chain/Dogecoin/q/getsentbyaddress/valid_address"
     "1.2345"
     (let ((sent-amount (dogechain-api:get-sent-by-address "valid_address")))
