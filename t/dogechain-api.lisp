@@ -44,21 +44,17 @@
 ;; -- valid-address-p
 ;; ----------------------------------------------------------------------
 
-(with-mocks ()
-  (answer (drakma:http-request uri)
-    (progn
-      (is uri "http://dogechain.info/chain/Dogecoin/q/checkaddress/invalid_address")
-      "Error: address invalid"))
-  (isnt (dogechain-api:valid-address-p "invalid_address") T))
-
-(with-mocks ()
-  (answer (drakma:http-request uri)
-    (progn
-      (is uri "http://dogechain.info/chain/Dogecoin/q/checkaddress/valid_address")
-      "1E"))
-  (let ((response (dogechain-api:valid-address-p "valid_address")))
-    (ok response)
-    (is-type response 'boolean)))
+(subtest ":valid-address-p"
+  (with-mocked-request "http://dogechain.info/chain/Dogecoin/q/checkaddress/invalid_address"
+    "Error: address invalid"
+    (let ((response (dogechain-api:valid-address-p "invalid_address"))) 
+      (is-type response 'boolean "Returns boolean result for invalid address.")
+      (isnt response t "Returns nil for invalid address")))
+  (with-mocked-request "http://dogechain.info/chain/Dogecoin/q/checkaddress/valid_address"
+    "1E"
+    (let ((response (dogechain-api:valid-address-p "valid_address"))) 
+      (is-type response 'boolean "Returns boolean result for valid address.")
+      (is response t "Returns t for valid address"))))
 
 
 ;; ----------------------------------------------------------------------
