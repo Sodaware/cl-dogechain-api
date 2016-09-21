@@ -11,7 +11,8 @@
                :cl-mock)
   :components ((:module "t"
                         :components
-                        ((:test-file "dogechain-api"))))
+                        ((:file "test-util")
+                         (:test-file "dogechain-api"))))
 
   :defsystem-depends-on (:prove-asdf)
   :perform (test-op :after (op c)

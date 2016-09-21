@@ -13,21 +13,16 @@
 ;; -- get-address-balance
 ;; ----------------------------------------------------------------------
 
-(with-mocks ()
-  (answer (drakma:http-request uri)
-    (progn
-      (is uri "http://dogechain.info/chain/Dogecoin/q/addressbalance/invalid_address")
-      "Error: address invalid"))
-  (is-error (dogechain-api:get-address-balance "invalid_address") 'dogechain-api-error))
-
-(with-mocks ()
-  (answer (drakma:http-request uri)
-    (progn
-      (is uri "http://dogechain.info/chain/Dogecoin/q/addressbalance/valid_address")
-      "1.2345"))
-  (let ((balance (dogechain-api:get-address-balance "valid_address")))
-    (is balance 1.2345)
-    (is-type balance 'float)))
+(subtest ":get-address-balance"
+  (with-mocked-request "http://dogechain.info/chain/Dogecoin/q/addressbalance/invalid_address"
+    "Error: address invalid"
+    (is-error (dogechain-api:get-address-balance "invalid_address") 'dogechain-api-error
+              "Raises a 'dogechain-api-error for invalid addresses."))
+  (with-mocked-request "http://dogechain.info/chain/Dogecoin/q/addressbalance/valid_address"
+    "1.2345"
+    (let ((balance (dogechain-api:get-address-balance "valid_address")))
+      (is-type balance 'float "Returns a floating point balance")
+      (is balance 1.2345 "Returns the correct balance"))))
 
 
 ;; ----------------------------------------------------------------------
