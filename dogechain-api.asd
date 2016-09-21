@@ -12,5 +12,6 @@
   :pathname "src"
   :components ((:file "package")
                (:file "configuration")
+               (:file "conditions")
                (:file "dogechain-api"))
   :in-order-to ((test-op (test-op dogechain-api-test))))
