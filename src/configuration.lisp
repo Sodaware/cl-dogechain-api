@@ -1,4 +1,4 @@
-;;; json-api.lisp -- Functions for the JSON api.
+;;; configuration.lisp -- Configuration values for the package.
 
 (in-package #:dogechain-api)
 
@@ -15,6 +15,6 @@
   "Path to the json endpoint.")
 
 (defvar *last-called-url* ""
-  "The last URL that was queried.")
+  "The last URL that was queried by the API.")
 
 
