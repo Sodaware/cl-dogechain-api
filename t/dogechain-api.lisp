@@ -113,16 +113,17 @@
   (is-error (dogechain-api:hash-to-address "hash") 'dogechain-api-error
             "Raises error when called"))
 
-  (with-mocks ()
-    (answer (drakma:http-request uri)
-            (progn
-              (is uri "http://dogechain.info/chain/Dogecoin/q/totalbc/")
-              "12345.6789"))
-    (let ((mined-amount (dogechain-api:get-total-mined)))
-      (is mined-amount 12345.6789)
-      (is-type mined-amount 'float)))
 
-  (is-error (dogechain-api:hash-to-address "hash") 'dogechain-api-error))
+;; ----------------------------------------------------------------------
+;; -- get-total-mined
+;; ----------------------------------------------------------------------
+
+(subtest ":get-total-mined"
+  (with-mocked-request "http://dogechain.info/chain/Dogecoin/q/totalbc/"
+    "12345.6789"
+    (let ((mined-amount (dogechain-api:get-total-mined)))
+      (is-type mined-amount 'float "Returns a floating point amount")
+      (is mined-amount 12345.6789 "Returns the total number of coins ever mined"))))
 
 
 ;; ----------------------------------------------------------------------
